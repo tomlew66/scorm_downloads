@@ -9,34 +9,6 @@ $fileName = optional_param('name', '', PARAM_TEXT);
 
 $errorthrown = false;
 
-/*$the_big_array = [];
-$array_update = [];
-
-$filename = "M:\Moodle-WWWRoots\cff-project.howcollege.ac.uk\wwwroot\local\scorm_downloads\DfEMetadata.csv";
-
-if (($h = fopen("{$filename}", "r")) !== FALSE)
-{
-    // Each line in the file is converted into an individual array that we call $data
-    // The items of the array are comma separated
-    while (($data = fgetcsv($h, 1000, ",")) !== FALSE)
-    {
-        // Each individual array is being pushed into the nested array
-        $the_big_array[] = $data;
-        foreach ($the_big_array as $key => $value) {
-            $filetitle = str_ireplace('.zip', '', $value[1]);
-            $filetilefinal = strtolower($filetitle);
-            $array_update[$filetilefinal] = ["filename" => $value[1], "shortdescription" => $value[2], "objectives" => $value[3]];
-        }
-        array_shift($array_update);
-        ksort($array_update);
-    }
-
-    // Close the file
-    fclose($h);
-}
-var_dump($array_update);*/
-
-
 if($fileId) {
 
     global $CFG;
@@ -49,7 +21,7 @@ if($fileId) {
 
     try {
         $getScorm = $service->files->get($fileId, array('alt' => 'media'));
-        $testcontent = $getScorm->getBody()->getContents();
+        $content = $getScorm->getBody()->getContents();
         $length = $getScorm->getBody()->getSize();
 
         ob_end_clean();
@@ -62,7 +34,7 @@ if($fileId) {
         header('Pragma: public');
         header('Content-Length: ' . $length);
         flush();
-        echo $testcontent;
+        echo $content;
         exit();
 
     } catch (\Throwable $e) {
